@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql
+package org.apache.spark.sql.execution
 
 /**
- * The physical execution component of Spark SQL. Note that this is a private package.
- * All classes in catalyst are considered an internal API to Spark SQL and are subject
- * to change between minor releases.
+ * An interface for relations that are backed by files.  When a class implements this interface,
+ * the list of paths that it returns will be returned to a user who calls `inputPaths` on any
+ * DataFrame that queries this relation.
  */
-package object execution
+trait FileRelation {
+  /** Returns the list of files that will be read when scanning this relation. */
+  def inputFiles: Array[String]
+}
